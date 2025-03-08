@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../screens/Home";
-import Search from "../screens/Search";
-import Chat from "../screens/Chat";
-import Profile from "../screens/Profile";
+import Home from "../TabScreens/Home";
+import Search from "../TabScreens/Search";
+import Chat from "../TabScreens/Chat";
+import Profile from "../TabScreens/Profile";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Octicons from "@expo/vector-icons/Octicons";
 
@@ -15,7 +15,7 @@ function BottomTab() {
         tabBarActiveTintColor: "dodgerblue",
         tabBarInactiveTintColor: "#A7CCF6",
         tabBarLabelStyle: {
-          fontSize: 15,
+          fontSize: 14,
           // color: "red",
           fontWeight: "semibold",
         },
