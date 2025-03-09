@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./../screens/Home";
-import Search from "../screens/Search";
-import Chat from "../screens/Chat";
-import Profile from "../screens/Profile";
+import Home from "./../TabScreens/Home";
+import Search from "../TabScreens/Search";
+import Chat from "../TabScreens/Chat";
+import Profile from "../TabScreens/Profile";
 
 const Stack = createStackNavigator();
 

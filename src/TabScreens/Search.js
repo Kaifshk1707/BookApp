@@ -5,6 +5,8 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Button,
+  ActivityIndicator
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -19,19 +21,17 @@ const Search = () => {
     try {
       const response = await axios.get(endPointURL1);
       setElectronicList(response.data);
-      
     } catch (err) {
       console.log("An Error", err);
     }
   };
 
   const deleteBookById = async (id) => {
-    try{
+    try {
       const response = await axios.delete(`${endPointURL1}/${id}`);
       Alert.alert("Book is deleted successfully")
-    }catch(err){
+    } catch (err) {
       console.log(err);
-      
     }
   }
 
@@ -108,13 +108,13 @@ const Search = () => {
               🔄 Share
             </Text>
           </TouchableOpacity> */}
-          <TouchableOpacity onPress={() => deleteBookById(item.id)} style={{ paddingHorizontal: 15, paddingVertical: 8 }}>
+          <TouchableOpacity onPress={() => deleteBookById (item.id)} style={{ paddingHorizontal: 15, paddingVertical: 8 }}>
             <Text style={{ fontSize: 16, fontWeight: "bold", color: "#555" }}>
               🔄 Delete
             </Text>
           </TouchableOpacity>
 
-          
+
         </View>
       </View>
     </View>
@@ -122,12 +122,19 @@ const Search = () => {
 
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: "#F5F5F5" }}>
-      <FlatList
-        data={electronicList}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingBottom: 20 }}
-        renderItem={renderItem}
-      />
+
+      {electronicList.length > 0 ?
+        (
+          <FlatList
+            data={electronicList}
+            keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            renderItem={renderItem}
+          />
+        )
+        : (
+          <ActivityIndicator size={"large"} color={"#A7CCF6"} />
+        )}
     </View>
   );
 };
