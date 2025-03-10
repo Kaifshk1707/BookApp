@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   Button,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -15,29 +15,9 @@ import moment from "moment";
 const Search = () => {
   const [electronicList, setElectronicList] = useState([]);
 
-  const endPointURL1 = "https://67c9694e0acf98d0708a2b66.mockapi.io/electronic";
-
-  const getBookById = async () => {
-    try {
-      const response = await axios.get(endPointURL1);
-      setElectronicList(response.data);
-    } catch (err) {
-      console.log("An Error", err);
-    }
-  };
-
-  const deleteBookById = async (id) => {
-    try {
-      const response = await axios.delete(`${endPointURL1}/${id}`);
-      Alert.alert("Book is deleted successfully")
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  useEffect(() => {
-    getBookById();
-  }, []);
+  // useEffect(() => {
+  //   getBookById();
+  // }, []);
 
   const renderItem = ({ item }) => (
     <View
@@ -66,7 +46,8 @@ const Search = () => {
         📖 {item.name_of_item}
       </Text>
       <Text style={{ fontSize: 16, color: "#666", marginBottom: 4 }}>
-        💰 Price: <Text style={{ fontWeight: "bold" }}>${item.price_of_item}</Text>
+        💰 Price:{" "}
+        <Text style={{ fontWeight: "bold" }}>${item.price_of_item}</Text>
       </Text>
       <Text style={{ fontSize: 14, color: "blue", marginBottom: 4 }}>
         ✉️ Seller: {item.name_of_shop}
@@ -75,7 +56,8 @@ const Search = () => {
         ✉️ Details: {item.details_item}
       </Text>
       <Text style={{ fontSize: 14, color: "#888" }}>
-        📆 Published on: {moment.utc(item.createdAt).format("MMMM Doтрибут, h:mm A")}
+        📆 Published on:{" "}
+        {moment.utc(item.createdAt).format("MMMM Doтрибут, h:mm A")}
       </Text>
       <View
         style={{
@@ -93,12 +75,16 @@ const Search = () => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity style={{ paddingHorizontal: 15, paddingVertical: 8 }}>
+          <TouchableOpacity
+            style={{ paddingHorizontal: 15, paddingVertical: 8 }}
+          >
             <Text style={{ fontSize: 16, fontWeight: "bold", color: "#555" }}>
               👍 Like
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ paddingHorizontal: 15, paddingVertical: 8 }}>
+          <TouchableOpacity
+            style={{ paddingHorizontal: 15, paddingVertical: 8 }}
+          >
             <Text style={{ fontSize: 16, fontWeight: "bold", color: "#555" }}>
               📖 Read
             </Text>
@@ -108,13 +94,14 @@ const Search = () => {
               🔄 Share
             </Text>
           </TouchableOpacity> */}
-          <TouchableOpacity onPress={() => deleteBookById (item.id)} style={{ paddingHorizontal: 15, paddingVertical: 8 }}>
+          <TouchableOpacity
+            onPress={() => deleteBookById(item.id)}
+            style={{ paddingHorizontal: 15, paddingVertical: 8 }}
+          >
             <Text style={{ fontSize: 16, fontWeight: "bold", color: "#555" }}>
               🔄 Delete
             </Text>
           </TouchableOpacity>
-
-
         </View>
       </View>
     </View>
@@ -122,19 +109,16 @@ const Search = () => {
 
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: "#F5F5F5" }}>
-
-      {electronicList.length > 0 ?
-        (
-          <FlatList
-            data={electronicList}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{ paddingBottom: 20 }}
-            renderItem={renderItem}
-          />
-        )
-        : (
-          <ActivityIndicator size={"large"} color={"#A7CCF6"} />
-        )}
+      {electronicList.length > 0 ? (
+        <FlatList
+          data={electronicList}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{ paddingBottom: 20 }}
+          renderItem={renderItem}
+        />
+      ) : (
+        <ActivityIndicator size={"large"} color={"#A7CCF6"} />
+      )}
     </View>
   );
 };
