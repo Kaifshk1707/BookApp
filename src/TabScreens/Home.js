@@ -1,129 +1,85 @@
 import {
   View,
+  FlatList,
+  ActivityIndicator,
+  Modal,
   Text,
   Button,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import moment from "moment";
+import { getAPIData, handleDeletePost } from "../API/config";
+import HomeComponent from "../components/HomeComponent";
+import AddButton from "../components/AddButton";
+import AddBookScreen from "../screeens/AddBookScreen";
+import GlobalTextInput from "../screeens/GlobalTextInput";
+import AppButton from "../components/AppButton";
 
 const Home = () => {
   const [bookList, setBookList] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const endPointURL = "https://67c9694e0acf98d0708a2b66.mockapi.io/books";
-
-  const getAPIData = async () => {
-    const response = await axios.get(endPointURL);
-    console.log("Fetched Data:", response.data);
-    setBookList(response.data);
-    
+  const getListOfBook = () => {
+    getAPIData({
+      onSuccess: (data) => setBookList(data),
+      onError: (err) => console.log(err),
+    });
   };
 
-  const deletePost = async(id) =>{
-    try{
-      const response = await axios.delete(`${endPointURL}/${id}`)
-      Alert.alert("Post has beend deleted")
-    }catch(err){
-      console.log("An error occured", err);
-      
-    }
-  }
-
   useEffect(() => {
-    getAPIData();
+    getListOfBook();
   }, []);
 
-  renderItem = ({ item }) => (
-    <View
-      style={{
-        backgroundColor: '#FFFFFF',
-        marginVertical: 10,
-        padding: 15,
-        borderRadius: 12,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 6,
-        elevation: 5,
-      }}
-    >
-      <Image
-        style={{ width: '100%', height: 220, borderRadius: 10, marginBottom: 12 }}
-        source={{ uri: item.cover }}
-      />
-
-      <View style={{ marginBottom: 10 }}>
-        <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 6, color: '#333' }}>
-          📖 {item.name_of_author}
-        </Text>
-        <Text style={{ fontSize: 16, color: '#555', marginBottom: 6 }}>
-          💰 Price: <Text style={{ fontWeight: 'bold', color: '#4CAF50' }}>${item.price_of_book}</Text>
-        </Text>
-        <Text style={{ fontSize: 15, color: '#2196F3', marginBottom: 6 }}>
-          ✉️ Seller: {item.email_of_seller}
-        </Text>
-        <Text style={{ fontSize: 14, color: '#777' }}>
-          📆 Published on: {moment.utc(item.createdAt).format('MMMM Doтрибут, h:mm A')}
-        </Text>
-      </View>
-
-      <View
-        style={{
-          width: '100%',
-          marginTop: 12,
-          backgroundColor: '#F3F3F3',
-          paddingVertical: 12,
-          borderRadius: 10,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-          }}
-        >
-          <TouchableOpacity
-            style={{ paddingVertical: 8, paddingHorizontal: 16, borderRadius: 20 }}
-          >
-            <Text style={{ fontSize: 16, fontWeight: '500', color: '#444' }}>👍 Like</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ paddingVertical: 8, paddingHorizontal: 16, borderRadius: 20 }}
-          >
-            <Text style={{ fontSize: 16, fontWeight: '500', color: '#444' }}>📖 Read</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ paddingVertical: 8, paddingHorizontal: 16, borderRadius: 20 }}
-            onPress={() => deletePost(item.id)}
-          >
-            <Text style={{ fontSize: 16, fontWeight: '500', color: '#444' }}>🔄 Delete</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
+  const hadnleDeleteItem = (item) => {
+    console.log(item.id);
+    handleDeletePost({
+      onSuccess: () => getListOfBook(),
+      onError: (err) => console.log(err),
+      itemID: item.id,
+    });
+  };
 
   return (
-    <View style={{ flex: 1, padding: 15, backgroundColor: "#F5F5F5" }}>
-
-
-      {bookList.length > 0 ?
-        (<FlatList
+    <View
+      style={{
+        flex: 1,
+        padding: 10,
+        backgroundColor: "#F5F5F5",
+        // justifyContent: "center",
+        // alignItems: "center",
+      }}
+    >
+      {bookList.length > 0 ? (
+        <FlatList
           // horizontal
           data={bookList}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ paddingBottom: 20 }}
-          renderItem={renderItem}
-        />) :
-        (
-          <ActivityIndicator size={"large"} color={"#A7CCF6"} />
-        )}
+          renderItem={({ item }) => (
+            <HomeComponent
+              title={item.name_of_author}
+              BookTitle={item.book_title}
+              price={item.price_of_book}
+              email={item.email_of_seller}
+              imageURL={item.cover}
+              date={item.createdAt}
+              onDeleteItem={() => hadnleDeleteItem(item)}
+            />
+          )}
+        />
+      ) : (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ActivityIndicator size={60} color={"#A7CCF6"} />
+        </View>
+      )}
+      <AddButton onPress={() => setModalVisible(true)} />
+      <Modal visible={modalVisible} animationType="slide">
+        <AddBookScreen
+          onCloseModal={() => setModalVisible(false)}
+          createNewSuccess={() => getListOfBook()}
+        />
+      </Modal>
     </View>
   );
 };
