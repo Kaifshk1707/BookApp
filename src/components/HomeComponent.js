@@ -12,7 +12,6 @@ const HomeComponent = ({
   email,
   date,
   onDeleteItem,
-  onEditItem,
 }) => {
   return (
     <View
@@ -36,11 +35,7 @@ const HomeComponent = ({
           borderRadius: 10,
           marginBottom: 12,
         }}
-        source={
-          imageURL
-            ? { uri: imageURL }
-            : require("./../assets/image/emptyImage.jpg")
-        }
+        source={{ uri: imageURL }}
       />
 
       <View style={{ marginBottom: 10 }}>
@@ -115,7 +110,6 @@ const HomeComponent = ({
           </Text>
         </TouchableOpacity> */}
           <TouchableOpacity
-            onPress={onEditItem}
             style={{
               paddingVertical: 8,
               paddingHorizontal: 12,

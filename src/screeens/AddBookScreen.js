@@ -1,25 +1,18 @@
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  createBook,
-  getAPIData,
-  handleDeletePost,
-  handleUpdateBook,
-} from "../API/config";
+import { createBook, getAPIData, handleDeletePost } from "../API/config";
 import HomeComponent from "../components/HomeComponent";
 import AddButton from "../components/AddButton";
 import GlobalTextInput from "../screeens/GlobalTextInput";
 import AppButton from "../components/AppButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
-  const [image, setImage] = useState(selectedItem?.cover || "");
-  const [authorName, setAuthorName] = useState(
-    selectedItem?.name_of_author || ""
-  );
-  const [bookName, setBookName] = useState(selectedItem?.book_title || "");
-  const [price, setPrice] = useState(selectedItem?.price_of_book || "");
-  const [email, setEmail] = useState(selectedItem?.email_of_seller || "");
+const AddBookScreen = ({ onCloseModal, createNewSuccess }) => {
+  const [image, setImage] = useState("");
+  const [authorName, setAuthorName] = useState("");
+  const [bookName, setBookName] = useState("");
+  const [price, setPrice] = useState("");
+  const [email, setEmail] = useState("");
 
   const createNewBook = () => {
     createBook({
@@ -35,29 +28,7 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
         createNewSuccess();
       },
       onError: (err) => {
-        console.log("API Error:", err);
-        Alert.alert("Some error occurred", err?.message || "Unknown error");
-      },
-    });
-  };
-
-  const handleEditPost = () => {
-    handleUpdateBook({
-      Id: selectedItem.id,
-      body: {
-        cover: image,
-        name_of_author: authorName,
-        book_title: bookName,
-        price_of_book: price,
-        email_of_seller: email,
-      },
-      onSuccess: () => {
-        onCloseModal();
-        createNewSuccess();
-      },
-      onError: (err) => {
-        console.log("API Error:", err);
-        Alert.alert("Some error occurred", err?.message || "Unknown error");
+        Alert.alert("Some error occured", err);
       },
     });
   };
@@ -118,10 +89,7 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
           value={email}
           onChangeText={(txt) => setEmail(txt)}
         />
-        <AppButton
-          onSaveDetail={!!selectedItem ? handleEditPost : createNewBook}
-          selectedItem={selectedItem}
-        />
+        <AppButton onSaveDetail={createNewBook} />
       </View>
     </View>
   );
