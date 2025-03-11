@@ -1,12 +1,16 @@
 import axios from "axios";
 import { Alert } from "react-native";
-const endPointURL = "https://67c9694e0acf98d0708a2b66.mockapi.io/books";
-// const endPointURL1 = "https://67c9694e0acf98d0708a2b66.mockapi.io/electronic";
+import { API_BASE_URL } from "@env";
+
+const endPointURL = `${API_BASE_URL}/books`;
 
 export const getAPIData = async ({ onSuccess, onError }) => {
+  console.log("==========API_BASE_URL==========");
+  console.log(`${API_BASE_URL}/books`);
+  console.log("=========API_BASE_URL=============");
   try {
     const response = await axios.get(endPointURL);
-    console.log("Fetched Data:", response.data, null + 10);
+    // console.log("Fetched Data:", response.data);
     onSuccess && onSuccess(response.data);
   } catch (error) {
     onError && onError(error);
