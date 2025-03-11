@@ -2,12 +2,13 @@
 
 # dependencies
 node_modules/
-.env
 
 
 # Expo
 .expo/
 dist/
+.env/
+
 web-build/
 expo-env.d.ts
 
