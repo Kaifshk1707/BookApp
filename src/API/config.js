@@ -5,9 +5,6 @@ import { API_BASE_URL } from "@env";
 const endPointURL = `${API_BASE_URL}/books`;
 
 export const getAPIData = async ({ onSuccess, onError }) => {
-  console.log("==========API_BASE_URL==========");
-  console.log(`${API_BASE_URL}/books`);
-  console.log("=========API_BASE_URL=============");
   try {
     const response = await axios.get(endPointURL);
     // console.log("Fetched Data:", response.data);
