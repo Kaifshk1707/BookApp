@@ -37,6 +37,14 @@ const Home = () => {
     });
   };
 
+  const handleEditPost = (item) => {
+    setModalVisible(true);
+
+    console.log("====================================");
+    console.log(item);
+    console.log("====================================");
+  };
+
   return (
     <View
       style={{
@@ -62,6 +70,7 @@ const Home = () => {
               imageURL={item.cover}
               date={item.createdAt}
               onDeleteItem={() => hadnleDeleteItem(item)}
+              onEditItem={() => handleEditPost(item)}
             />
           )}
         />
