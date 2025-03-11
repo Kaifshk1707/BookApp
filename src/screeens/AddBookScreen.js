@@ -28,7 +28,8 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess }) => {
         createNewSuccess();
       },
       onError: (err) => {
-        Alert.alert("Some error occured", err);
+        console.log("API Error:", err); // Debugging
+        Alert.alert("Some error occurred", err?.message || "Unknown error");
       },
     });
   };

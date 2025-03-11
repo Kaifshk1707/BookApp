@@ -46,14 +46,19 @@ export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
 // };
 
 // Create a new book
+
 export const createBook = async ({ onSuccess, onError, body }) => {
   try {
-    await axios.post(endPointURL, body);
+    const response = await axios.post(endPointURL, body); // Store response
+    console.log("====================================");
+    console.log(response.data, null + 10);
+    console.log("====================================");
     onSuccess && onSuccess(response.data);
+
     Alert.alert("Book was created");
   } catch (error) {
     onError && onError(error);
-    console.log("An Error", error);
+    console.log("An Error:", error);
   }
 };
 
