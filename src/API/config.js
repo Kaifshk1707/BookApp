@@ -7,7 +7,6 @@ const endPointURL = `${API_BASE_URL}/books`;
 export const getAPIData = async ({ onSuccess, onError }) => {
   try {
     const response = await axios.get(endPointURL);
-    // console.log("Fetched Data:", response.data);
     onSuccess && onSuccess(response.data);
   } catch (error) {
     onError && onError(error);
@@ -44,17 +43,11 @@ export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
 //   price_of_item: 1300,
 //   details_item: "Learn! Programming",
 // };
-
 // Create a new book
-
 export const createBook = async ({ onSuccess, onError, body }) => {
   try {
     const response = await axios.post(endPointURL, body); // Store response
-    console.log("====================================");
-    console.log(response.data, null + 10);
-    console.log("====================================");
     onSuccess && onSuccess(response.data);
-
     Alert.alert("Book was created");
   } catch (error) {
     onError && onError(error);
@@ -62,50 +55,15 @@ export const createBook = async ({ onSuccess, onError, body }) => {
   }
 };
 
-export const handleUpdateBook = async ({ onSuccess, onError }) => {
+// Update the book
+export const handleUpdateBook = async ({ onSuccess, onError, body, Id }) => {
   try {
-    await axios.put(`${endPointURL}/8`, body);
+    const response = await axios.put(`${endPointURL}/${Id}`, body); // Store response
     onSuccess && onSuccess(response.data);
+    Alert.alert("Book has been updated");
     // getAPIData(); // Fetch updated data after creation
   } catch (error) {
     onError && onError(error);
     console.log("Error", error);
   }
 };
-
-// export const getApiData = async ({ onError, onSuccess }) => {
-//     try {
-//       const response = await axios.get(endPointURL);
-//       onSuccess();
-//     } catch (error) {
-//       onError();
-//       Alert.alert("Error", "Failed to load data. Please try again.");
-//     }
-//   };
-
-// // Fetch Data
-// export const getListOfBook = async ({ onSuccess, onError }) => {
-//     try {
-//       const response = await axios.get(endPointURL);
-//       onSuccess();
-//     } catch (err) {
-//       onError();
-//       console.log("Error fetching data", err);
-//     }
-//   };
-
-// Delete a book by ID
-// export const handleDeletePost = async ({ onSuccess, onError }) => {
-//   if (loading) return;
-//   setLoading(true);
-//   try {
-//     await axios.delete(`${endPointURL}/${id}`);
-//     onSuccess();
-//     getApiData();
-//   } catch (err) {
-//     onError();
-//     console.error("Error deleting post:", err.response?.data || err.message);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
