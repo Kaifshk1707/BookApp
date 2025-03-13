@@ -17,7 +17,7 @@ import AppButton from "../components/AppButton";
 const Home = () => {
   const [bookList, setBookList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [selectedItem, setSelectedItem] = useState({});
   const getListOfBook = () => {
     getAPIData({
       onSuccess: (data) => setBookList(data),
@@ -40,10 +40,7 @@ const Home = () => {
 
   const handleEditPost = (item) => {
     setModalVisible(true);
-
-    console.log("====================================");
-    console.log(item);
-    console.log("====================================");
+    setSelectedItem(item);
   };
 
   return (
@@ -82,11 +79,17 @@ const Home = () => {
           <ActivityIndicator size={60} color={"#A7CCF6"} />
         </View>
       )}
-      <AddButton onPress={() => setModalVisible(true)} />
+      <AddButton
+        onPress={() => {
+          setModalVisible(true);
+          setSelectedItem({});
+        }}
+      />
       <Modal visible={modalVisible} animationType="slide">
         <AddBookScreen
           onCloseModal={() => setModalVisible(false)}
           createNewSuccess={() => getListOfBook()}
+          selectedItem={selectedItem}
         />
       </Modal>
     </View>
