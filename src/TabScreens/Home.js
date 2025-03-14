@@ -7,7 +7,7 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getAPIData, handleDeletePost } from "../API/config";
+import { getBookData, handleDeletePost } from "../API/config";
 import HomeComponent from "../components/HomeComponent";
 import AddButton from "../components/AddButton";
 import AddBookScreen from "../screeens/AddBookScreen";
@@ -18,8 +18,9 @@ const Home = () => {
   const [bookList, setBookList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
+
   const getListOfBook = () => {
-    getAPIData({
+    getBookData({
       onSuccess: (data) => setBookList(data),
       onError: (err) => console.log(err),
     });

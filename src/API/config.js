@@ -2,11 +2,22 @@ import axios from "axios";
 import { Alert } from "react-native";
 import { API_BASE_URL } from "@env";
 
-const endPointURL = `${API_BASE_URL}/books`;
+const bookListDataURL = `${API_BASE_URL}/books`;
+const electronicListDataURL = `${API_BASE_URL}/electronic`;
 
-export const getAPIData = async ({ onSuccess, onError }) => {
+export const getBookData = async ({ onSuccess, onError }) => {
   try {
-    const response = await axios.get(endPointURL);
+    const response = await axios.get(bookListDataURL);
+    onSuccess && onSuccess(response.data);
+  } catch (error) {
+    onError && onError(error);
+    console.log("An Error", error);
+  }
+};
+
+export const getElectronicData = async ({ onSuccess, onError }) => {
+  try {
+    const response = await axios.get(electronicListDataURL);
     onSuccess && onSuccess(response.data);
   } catch (error) {
     onError && onError(error);
@@ -16,7 +27,7 @@ export const getAPIData = async ({ onSuccess, onError }) => {
 
 export const getBookById = async ({ onSuccess, onError }) => {
   try {
-    const response = await axios.get(`${endPointURL}/6`);
+    const response = await axios.get(`${bookListDataURL}/6`);
     // console.log(response.data, null + 10);
     onSuccess && onSuccess(response.data);
   } catch (err) {
@@ -28,7 +39,7 @@ export const getBookById = async ({ onSuccess, onError }) => {
 // Delete a book by ID
 export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
   try {
-    const response = await axios.delete(`${endPointURL}/${itemID}`);
+    const response = await axios.delete(`${bookListDataURL}/${itemID}`);
     onSuccess && onSuccess(response.data);
     Alert.alert("Post has been deleted");
   } catch (error) {
@@ -46,7 +57,7 @@ export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
 // Create a new book
 export const createBook = async ({ onSuccess, onError, body }) => {
   try {
-    const response = await axios.post(endPointURL, body); // Store response
+    const response = await axios.post(bookListDataURL, body); // Store response
     onSuccess && onSuccess(response.data);
     Alert.alert("Book was created");
   } catch (error) {
@@ -58,10 +69,10 @@ export const createBook = async ({ onSuccess, onError, body }) => {
 // Update the book
 export const handleUpdateBook = async ({ onSuccess, onError, body, Id }) => {
   try {
-    const response = await axios.put(`${endPointURL}/${Id}`, body); // Store response
+    const response = await axios.put(`${bookListDataURL}/${Id}`, body); // Store response
     onSuccess && onSuccess(response.data);
     Alert.alert("Book has been updated");
-    // getAPIData(); // Fetch updated data after creation
+    // getBookData(); // Fetch updated data after creation
   } catch (error) {
     onError && onError(error);
     console.log("Error", error);

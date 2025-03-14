@@ -1,13 +1,6 @@
 import { View, Text, TouchableOpacity, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
-import {
-  createBook,
-  getAPIData,
-  handleDeletePost,
-  handleUpdateBook,
-} from "../API/config";
-import HomeComponent from "../components/HomeComponent";
-import AddButton from "../components/AddButton";
+import React, { useState } from "react";
+import { createBook, handleUpdateBook } from "../API/config";
 import GlobalTextInput from "../screeens/GlobalTextInput";
 import AppButton from "../components/AppButton";
 import AntDesign from "@expo/vector-icons/AntDesign";

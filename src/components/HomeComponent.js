@@ -3,6 +3,11 @@ import React from "react";
 import moment from "moment";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increaseLikeCount,
+  increaseLikeCountAmount,
+} from "../store/actions/dataAction";
 
 const HomeComponent = ({
   title,
@@ -14,6 +19,10 @@ const HomeComponent = ({
   onDeleteItem,
   onEditItem,
 }) => {
+  const totalLikes = useSelector((state) => state.totalLikes);
+
+  const dispatch = useDispatch();
+
   return (
     <View
       style={{
@@ -103,17 +112,22 @@ const HomeComponent = ({
             alignItems: "center",
           }}
         >
-          {/* <TouchableOpacity
-          style={{
-            paddingVertical: 8,
-            paddingHorizontal: 16,
-            borderRadius: 20,
-          }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: "500", color: "#444" }}>
-            👍 Like
-          </Text>
-        </TouchableOpacity> */}
+          <TouchableOpacity
+            // onPress={() => dispatch(increaseLikeCount())}
+            onPress={() => dispatch(increaseLikeCountAmount(5))}
+            style={{
+              paddingVertical: 8,
+              paddingHorizontal: 12,
+              borderRadius: 20,
+              // backgroundColor: "#eee",
+              borderColor: "orange",
+              borderWidth: 1,
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "500", color: "#444" }}>
+              👍 {totalLikes}
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={onEditItem}
             style={{
