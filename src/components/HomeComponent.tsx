@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Button } from "react-native";
 import React from "react";
 import moment from "moment";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -9,7 +9,18 @@ import {
   increaseLikeCountAmount,
 } from "../store/actions/dataAction";
 
-const HomeComponent = ({
+interface HomeComponentProps {
+  title: string;
+  BookTitle: string;
+  imageURL: string;
+  price: number;
+  email: string;
+  date: string;
+  onDeleteItem: () => void;
+  onEditItem: () => void;
+}
+
+const HomeComponent: React.FC<HomeComponentProps> = ({
   title,
   BookTitle,
   imageURL,
@@ -19,7 +30,10 @@ const HomeComponent = ({
   onDeleteItem,
   onEditItem,
 }) => {
-  const totalLikes = useSelector((state) => state.totalLikes);
+  const totalLikes = useSelector(
+    (state: { dataReducer: { totalLikes: number } }) =>
+      state.dataReducer.totalLikes
+  );
 
   const dispatch = useDispatch();
 
@@ -113,8 +127,8 @@ const HomeComponent = ({
           }}
         >
           <TouchableOpacity
-            // onPress={() => dispatch(increaseLikeCount())}
-            onPress={() => dispatch(increaseLikeCountAmount(5))}
+            // onPress={() => dispatch(increaseLikeCount())}  // static passing number
+            onPress={() => dispatch(increaseLikeCountAmount(1))} // dynamic passing number used by payload
             style={{
               paddingVertical: 8,
               paddingHorizontal: 12,
@@ -128,6 +142,7 @@ const HomeComponent = ({
               👍 {totalLikes}
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={onEditItem}
             style={{

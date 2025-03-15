@@ -4,12 +4,24 @@ import { getElectronicData } from "../API/config";
 import HomeComponent from "../components/HomeComponent";
 
 const Search = () => {
-  const [electronicList, setElectronicList] = useState([]);
+  interface ElectronicItem {
+    id: number;
+    name_of_item: string;
+    details_item: string;
+    price_of_item: number;
+    name_of_shop: string;
+    image_item: string;
+    createdAt: string;
+    hadnleDeleteItem: () => void;
+    handleEditPost: () => void;
+  }
+
+  const [electronicList, setElectronicList] = useState<ElectronicItem[]>([]);
 
   const getListData = () => {
     getElectronicData({
-      onSuccess: (data) => setElectronicList(data),
-      onError: (err) => console.log(err),
+      onSuccess: (data: any) => setElectronicList(data),
+      onError: (err: any) => console.log(err),
     });
   };
 
@@ -17,11 +29,19 @@ const Search = () => {
     getListData();
   }, []);
 
+  function handleDeleteItem(item: ElectronicItem): void {
+    throw new Error("Function not implemented.");
+  }
+
+  function handleEditPost(item: ElectronicItem): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: "#F5F5F5" }}>
       {electronicList.length > 0 ? (
         <FlatList
-          horizontal
+          // horizontal
           data={electronicList}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ paddingBottom: 20 }}
@@ -33,7 +53,7 @@ const Search = () => {
               email={item.name_of_shop}
               imageURL={item.image_item}
               date={item.createdAt}
-              onDeleteItem={() => hadnleDeleteItem(item)}
+              onDeleteItem={() => handleDeleteItem(item)}
               onEditItem={() => handleEditPost(item)}
             />
           )}

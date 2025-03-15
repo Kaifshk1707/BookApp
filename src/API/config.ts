@@ -5,12 +5,17 @@ import { API_BASE_URL } from "@env";
 const bookListDataURL = `${API_BASE_URL}/books`;
 const electronicListDataURL = `${API_BASE_URL}/electronic`;
 
-export const getBookData = async ({ onSuccess, onError }) => {
+interface CallbackParams {
+  onSuccess?: (data: any) => void;
+  onError?: (error: any) => void;
+}
+
+export const getBookData = async ({ onSuccess, onError }: CallbackParams) => {
   try {
     const response = await axios.get(bookListDataURL);
     onSuccess && onSuccess(response.data);
   } catch (error) {
-    onError && onError(error);
+export const getElectronicData = async ({ onSuccess, onError }: CallbackParams) => {
     console.log("An Error", error);
   }
 };
@@ -20,7 +25,7 @@ export const getElectronicData = async ({ onSuccess, onError }) => {
     const response = await axios.get(electronicListDataURL);
     onSuccess && onSuccess(response.data);
   } catch (error) {
-    onError && onError(error);
+export const getBookById = async ({ onSuccess, onError }: CallbackParams) => {
     console.log("An Error", error);
   }
 };
@@ -32,7 +37,11 @@ export const getBookById = async ({ onSuccess, onError }) => {
     onSuccess && onSuccess(response.data);
   } catch (err) {
     onError && onError(error);
-    console.log("An Error", err);
+interface DeleteParams extends CallbackParams {
+  itemID: string;
+}
+
+export const handleDeletePost = async ({ onSuccess, onError, itemID }: DeleteParams) => {
   }
 };
 
@@ -46,7 +55,11 @@ export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
     onError && onError(error);
     console.log("An error occured", error);
   }
-};
+interface CreateParams extends CallbackParams {
+  body: any;
+}
+
+export const createBook = async ({ onSuccess, onError, body }: CreateParams) => {
 
 // const body = {  // hard code practice body
 //   name_of_item: "Hero Development",
@@ -54,7 +67,11 @@ export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
 //   price_of_item: 1300,
 //   details_item: "Learn! Programming",
 // };
-// Create a new book
+interface UpdateParams extends CreateParams {
+  Id: string;
+}
+
+export const handleUpdateBook = async ({ onSuccess, onError, body, Id }: UpdateParams) => {
 export const createBook = async ({ onSuccess, onError, body }) => {
   try {
     const response = await axios.post(bookListDataURL, body); // Store response

@@ -1,7 +1,15 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, KeyboardTypeOptions } from "react-native";
 import React from "react";
 
-const GlobalTextInput = ({
+interface GlobalTextInputProps {
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+  othersProps?: object;
+}
+
+const GlobalTextInput: React.FC<GlobalTextInputProps> = ({
   value,
   onChangeText,
   placeholder,

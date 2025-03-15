@@ -1,17 +1,36 @@
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import { createBook, handleUpdateBook } from "../API/config";
-import GlobalTextInput from "../screeens/GlobalTextInput";
+import GlobalTextInput from "./GlobalTextInput";
 import AppButton from "../components/AppButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
+interface AddBookScreenProps {
+  onCloseModal: () => void;
+  createNewSuccess: () => void;
+  selectedItem?: {
+    id?: number;
+    cover?: any;
+    name_of_author?: string;
+    book_title?: string;
+    price_of_book?: number;
+    email_of_seller?: string;
+  };
+}
+
+const AddBookScreen: React.FC<AddBookScreenProps> = ({
+  onCloseModal,
+  createNewSuccess,
+  selectedItem,
+}) => {
   const [image, setImage] = useState(selectedItem?.cover || "");
   const [authorName, setAuthorName] = useState(
     selectedItem?.name_of_author || ""
   );
   const [bookName, setBookName] = useState(selectedItem?.book_title || "");
-  const [price, setPrice] = useState(selectedItem?.price_of_book || "");
+  const [price, setPrice] = useState(
+    selectedItem?.price_of_book?.toString() || ""
+  );
   const [email, setEmail] = useState(selectedItem?.email_of_seller || "");
 
   const createNewBook = () => {
@@ -27,7 +46,7 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
         onCloseModal();
         createNewSuccess();
       },
-      onError: (err) => {
+      onError: (err: any) => {
         console.log("API Error:", err);
         Alert.alert("Some error occurred", err?.message || "Unknown error");
       },
@@ -36,7 +55,7 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
 
   const handleEditPost = () => {
     handleUpdateBook({
-      Id: selectedItem.id,
+      Id: selectedItem?.id,
       body: {
         cover: image,
         name_of_author: authorName,
@@ -48,7 +67,7 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
         onCloseModal();
         createNewSuccess();
       },
-      onError: (err) => {
+      onError: (err: any) => {
         console.log("API Error:", err);
         Alert.alert("Some error occurred", err?.message || "Unknown error");
       },
@@ -89,6 +108,8 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
           placeholder="Cover Image"
           value={image}
           onChangeText={(txt) => setImage(txt)}
+          keyboardType={undefined}
+          othersProps={undefined}
         />
         <GlobalTextInput
           placeholder="Author Name: "
@@ -113,7 +134,6 @@ const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
         />
         <AppButton
           onSaveDetail={!!selectedItem ? handleEditPost : createNewBook}
-          selectedItem={selectedItem}
         />
       </View>
     </View>

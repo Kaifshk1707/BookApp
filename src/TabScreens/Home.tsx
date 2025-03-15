@@ -15,14 +15,24 @@ import GlobalTextInput from "../screeens/GlobalTextInput";
 import AppButton from "../components/AppButton";
 
 const Home = () => {
-  const [bookList, setBookList] = useState([]);
+  interface Book {
+    id: number;
+    name_of_author: string;
+    book_title: string;
+    price_of_book: number;
+    email_of_seller: string;
+    cover: string;
+    createdAt: string;
+  }
+
+  const [bookList, setBookList] = useState<Book[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
 
   const getListOfBook = () => {
     getBookData({
-      onSuccess: (data) => setBookList(data),
-      onError: (err) => console.log(err),
+      onSuccess: (data: any) => setBookList(data),
+      onError: (err: any) => console.log(err),
     });
   };
 
@@ -30,16 +40,16 @@ const Home = () => {
     getListOfBook();
   }, []);
 
-  const hadnleDeleteItem = (item) => {
+  const hadnleDeleteItem = (item: any) => {
     console.log(item.id);
     handleDeletePost({
       onSuccess: () => getListOfBook(),
-      onError: (err) => console.log(err),
+      onError: (err: any) => console.log(err),
       itemID: item.id,
     });
   };
 
-  const handleEditPost = (item) => {
+  const handleEditPost = (item: any) => {
     setModalVisible(true);
     setSelectedItem(item);
   };
@@ -58,7 +68,7 @@ const Home = () => {
         <FlatList
           // horizontal
           data={bookList}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item?.id?.toString()}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={({ item }) => (
             <HomeComponent
