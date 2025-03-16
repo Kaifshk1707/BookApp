@@ -5,24 +5,7 @@ import GlobalTextInput from "./GlobalTextInput";
 import AppButton from "../components/AppButton";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-interface AddBookScreenProps {
-  onCloseModal: () => void;
-  createNewSuccess: () => void;
-  selectedItem?: {
-    id?: number;
-    cover?: any;
-    name_of_author?: string;
-    book_title?: string;
-    price_of_book?: number;
-    email_of_seller?: string;
-  };
-}
-
-const AddBookScreen: React.FC<AddBookScreenProps> = ({
-  onCloseModal,
-  createNewSuccess,
-  selectedItem,
-}) => {
+const AddBookScreen = ({ onCloseModal, createNewSuccess, selectedItem }) => {
   const [image, setImage] = useState(selectedItem?.cover || "");
   const [authorName, setAuthorName] = useState(
     selectedItem?.name_of_author || ""
@@ -46,7 +29,7 @@ const AddBookScreen: React.FC<AddBookScreenProps> = ({
         onCloseModal();
         createNewSuccess();
       },
-      onError: (err: any) => {
+      onError: (err) => {
         console.log("API Error:", err);
         Alert.alert("Some error occurred", err?.message || "Unknown error");
       },
@@ -67,7 +50,7 @@ const AddBookScreen: React.FC<AddBookScreenProps> = ({
         onCloseModal();
         createNewSuccess();
       },
-      onError: (err: any) => {
+      onError: (err) => {
         console.log("API Error:", err);
         Alert.alert("Some error occurred", err?.message || "Unknown error");
       },

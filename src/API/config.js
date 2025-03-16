@@ -1,19 +1,14 @@
 import axios from "axios";
 import { Alert } from "react-native";
-// import { API_BASE_URL } from "@env";
+import { API_BASE_URL } from "@env";
 
-// const bookListDataURL = `${API_BASE_URL}/books`;
-const bookListDataURL = `https://67c9694e0acf98d0708a2b66.mockapi.io/books`;
+const bookListDataURL = `${API_BASE_URL}/books`;
+// const bookListDataURL = `https://67c9694e0acf98d0708a2b66.mockapi.io/books`;
 
-// const electronicListDataURL = `${API_BASE_URL}/electronic`;
-const electronicListDataURL = `https://67c9694e0acf98d0708a2b66.mockapi.io/electronic`;
+const electronicListDataURL = `${API_BASE_URL}/electronic`;
+// const electronicListDataURL = `https://67c9694e0acf98d0708a2b66.mockapi.io/electronic`;
 
-interface CallbackParams {
-  onSuccess?: (data: any) => void;
-  onError?: (error: any) => void;
-}
-
-export const getBookData = async ({ onSuccess, onError }: CallbackParams) => {
+export const getBookData = async ({ onSuccess, onError }) => {
   try {
     const response = await axios.get(bookListDataURL);
     onSuccess && onSuccess(response.data);
@@ -23,10 +18,7 @@ export const getBookData = async ({ onSuccess, onError }: CallbackParams) => {
   }
 };
 
-export const getElectronicData = async ({
-  onSuccess,
-  onError,
-}: CallbackParams) => {
+export const getElectronicData = async ({ onSuccess, onError }) => {
   try {
     const response = await axios.get(electronicListDataURL);
     onSuccess && onSuccess(response.data);
@@ -36,7 +28,7 @@ export const getElectronicData = async ({
   }
 };
 
-export const getBookById = async ({ onSuccess, onError }: CallbackParams) => {
+export const getBookById = async ({ onSuccess, onError }) => {
   try {
     const response = await axios.get(`${bookListDataURL}/6`);
     onSuccess && onSuccess(response.data);
@@ -46,15 +38,7 @@ export const getBookById = async ({ onSuccess, onError }: CallbackParams) => {
   }
 };
 
-interface DeleteParams extends CallbackParams {
-  itemID: string;
-}
-
-export const handleDeletePost = async ({
-  onSuccess,
-  onError,
-  itemID,
-}: DeleteParams) => {
+export const handleDeletePost = async ({ onSuccess, onError, itemID }) => {
   try {
     const response = await axios.delete(`${bookListDataURL}/${itemID}`);
     onSuccess && onSuccess(response.data);
@@ -65,15 +49,7 @@ export const handleDeletePost = async ({
   }
 };
 
-interface CreateParams extends CallbackParams {
-  body: any;
-}
-
-export const createBook = async ({
-  onSuccess,
-  onError,
-  body,
-}: CreateParams) => {
+export const createBook = async ({ onSuccess, onError, body }) => {
   try {
     const response = await axios.post(bookListDataURL, body);
     onSuccess && onSuccess(response.data);
@@ -84,16 +60,7 @@ export const createBook = async ({
   }
 };
 
-interface UpdateParams extends CreateParams {
-  Id: string;
-}
-
-export const handleUpdateBook = async ({
-  onSuccess,
-  onError,
-  body,
-  Id,
-}: UpdateParams) => {
+export const handleUpdateBook = async ({ onSuccess, onError, body, Id }) => {
   try {
     const response = await axios.put(`${bookListDataURL}/${Id}`, body);
     onSuccess && onSuccess(response.data);

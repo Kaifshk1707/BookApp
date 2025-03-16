@@ -11,28 +11,16 @@ import { getBookData, handleDeletePost } from "../API/config";
 import HomeComponent from "../components/HomeComponent";
 import AddButton from "../components/AddButton";
 import AddBookScreen from "../screeens/AddBookScreen";
-import GlobalTextInput from "../screeens/GlobalTextInput";
-import AppButton from "../components/AppButton";
 
 const Home = () => {
-  interface Book {
-    id: number;
-    name_of_author: string;
-    book_title: string;
-    price_of_book: number;
-    email_of_seller: string;
-    cover: string;
-    createdAt: string;
-  }
-
-  const [bookList, setBookList] = useState<Book[]>([]);
+  const [bookList, setBookList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
 
   const getListOfBook = () => {
     getBookData({
-      onSuccess: (data: any) => setBookList(data),
-      onError: (err: any) => console.log(err),
+      onSuccess: (data) => setBookList(data),
+      onError: (err) => console.log(err),
     });
   };
 
@@ -40,16 +28,16 @@ const Home = () => {
     getListOfBook();
   }, []);
 
-  const hadnleDeleteItem = (item: any) => {
+  const hadnleDeleteItem = (item) => {
     console.log(item.id);
     handleDeletePost({
       onSuccess: () => getListOfBook(),
-      onError: (err: any) => console.log(err),
+      onError: (err) => console.log(err),
       itemID: item.id,
     });
   };
 
-  const handleEditPost = (item: any) => {
+  const handleEditPost = (item) => {
     setModalVisible(true);
     setSelectedItem(item);
   };

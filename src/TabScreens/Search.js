@@ -1,41 +1,35 @@
 import { View, FlatList, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getElectronicData } from "../API/config";
+import { getElectronicData, handleDeletePost } from "../API/config";
 import HomeComponent from "../components/HomeComponent";
 
 const Search = () => {
-  interface ElectronicItem {
-    id: number;
-    name_of_item: string;
-    details_item: string;
-    price_of_item: number;
-    name_of_shop: string;
-    image_item: string;
-    createdAt: string;
-    hadnleDeleteItem: () => void;
-    handleEditPost: () => void;
-  }
+  const [electronicList, setElectronicList] = useState([]);
 
-  const [electronicList, setElectronicList] = useState<ElectronicItem[]>([]);
-
-  const getListData = () => {
-    getElectronicData({
-      onSuccess: (data: any) => setElectronicList(data),
-      onError: (err: any) => console.log(err),
+  const getListOfBook = () => {
+    getBookData({
+      onSuccess: (data) => setBookList(data),
+      onError: (err) => console.log(err),
     });
   };
 
   useEffect(() => {
-    getListData();
+    getListOfBook();
   }, []);
 
-  function handleDeleteItem(item: ElectronicItem): void {
-    throw new Error("Function not implemented.");
-  }
+  const hadnleDeleteItem = (item) => {
+    console.log(item.id);
+    handleDeletePost({
+      onSuccess: () => getListOfBook(),
+      onError: (err) => console.log(err),
+      itemID: item.id,
+    });
+  };
 
-  function handleEditPost(item: ElectronicItem): void {
-    throw new Error("Function not implemented.");
-  }
+  const handleEditPost = (item) => {
+    setModalVisible(true);
+    setSelectedItem(item);
+  };
 
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: "#F5F5F5" }}>

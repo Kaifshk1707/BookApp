@@ -9,18 +9,7 @@ import {
   increaseLikeCountAmount,
 } from "../store/actions/dataAction";
 
-interface HomeComponentProps {
-  title: string;
-  BookTitle: string;
-  imageURL: string;
-  price: number;
-  email: string;
-  date: string;
-  onDeleteItem: () => void;
-  onEditItem: () => void;
-}
-
-const HomeComponent: React.FC<HomeComponentProps> = ({
+const HomeComponent = ({
   title,
   BookTitle,
   imageURL,
@@ -30,10 +19,7 @@ const HomeComponent: React.FC<HomeComponentProps> = ({
   onDeleteItem,
   onEditItem,
 }) => {
-  const totalLikes = useSelector(
-    (state: { dataReducer: { totalLikes: number } }) =>
-      state.dataReducer.totalLikes
-  );
+  const totalLikes = useSelector((state) => state.dataReducer.totalLikes);
 
   const dispatch = useDispatch();
 

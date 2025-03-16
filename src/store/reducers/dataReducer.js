@@ -4,10 +4,7 @@ const initialState = {
   totalLikes: 0,
 };
 
-const dataReducer = (
-  state = initialState,
-  action: { type: any; payload: number }
-) => {
+const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case INCREASE_LIKE_COUNT:
       return { ...state, totalLikes: state.totalLikes + 1 }; // static passing number

@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const userRoll = useSelector((state: any) => state.settingReducer.userRoll);
+  const userRoll = useSelector((state) => state.settingReducer.userRoll);
   return (
     <View>
       <Text>userRoll: {userRoll}</Text>
