@@ -1,13 +1,6 @@
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Modal,
-  Text,
-  Button,
-} from "react-native";
+import { View, FlatList, ActivityIndicator, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getBookData, handleDeletePost } from "../API/config";
+import { getBookData, handleDeletePost } from "../API/book";
 import HomeComponent from "../components/HomeComponent";
 import AddButton from "../components/AddButton";
 import AddBookScreen from "../screeens/AddBookScreen";
@@ -28,7 +21,7 @@ const Home = () => {
     getListOfBook();
   }, []);
 
-  const hadnleDeleteItem = (item) => {
+  const handleDeleteItem = (item) => {
     console.log(item.id);
     handleDeletePost({
       onSuccess: () => getListOfBook(),
@@ -66,7 +59,7 @@ const Home = () => {
               email={item.email_of_seller}
               imageURL={item.cover}
               date={item.createdAt}
-              onDeleteItem={() => hadnleDeleteItem(item)}
+              onDeleteItem={() => handleDeleteItem(item)}
               onEditItem={() => handleEditPost(item)}
             />
           )}

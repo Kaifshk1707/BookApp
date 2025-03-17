@@ -1,14 +1,23 @@
-import { View, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList, ActivityIndicator, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getElectronicData, handleDeletePost } from "../API/config";
+import {
+  getBookData,
+  getElectronicData,
+  handleDeletePost,
+  handleDeletePostSearch,
+} from "../API/book";
 import HomeComponent from "../components/HomeComponent";
+import AddButton from "../components/AddButton";
+import AddBookScreen from "../screeens/AddBookScreen";
 
 const Search = () => {
   const [electronicList, setElectronicList] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({});
 
   const getListOfBook = () => {
-    getBookData({
-      onSuccess: (data) => setBookList(data),
+    getElectronicData({
+      onSuccess: (data) => setElectronicList(data),
       onError: (err) => console.log(err),
     });
   };
@@ -17,9 +26,9 @@ const Search = () => {
     getListOfBook();
   }, []);
 
-  const hadnleDeleteItem = (item) => {
+  const handleDeleteItem = (item) => {
     console.log(item.id);
-    handleDeletePost({
+    handleDeletePostSearch({
       onSuccess: () => getListOfBook(),
       onError: (err) => console.log(err),
       itemID: item.id,
@@ -55,6 +64,19 @@ const Search = () => {
       ) : (
         <ActivityIndicator size={"large"} color={"#A7CCF6"} />
       )}
+      <AddButton
+        onPress={() => {
+          setModalVisible(true);
+          setSelectedItem({});
+        }}
+      />
+      <Modal visible={modalVisible} animationType="slide">
+        <AddBookScreen
+          onCloseModal={() => setModalVisible(false)}
+          createNewSuccess={() => getListOfBook()}
+          selectedItem={selectedItem}
+        />
+      </Modal>
     </View>
   );
 };
