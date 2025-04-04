@@ -2,7 +2,7 @@ import { Provider } from "react-redux";
 import BottomTab from "./src/navigation/BottomTab";
 import StackNavigator from "./src/navigation/StackNavigator";
 import { NavigationContainer } from "@react-navigation/native";
-import store from "./src/store/store";
+import { store } from "./src/redux/store";
 
 const App = () => {
   return (

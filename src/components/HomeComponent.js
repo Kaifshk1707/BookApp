@@ -4,7 +4,7 @@ import moment from "moment";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useSelector,useDispatch } from "react-redux";
-import { increaseTotalLikes } from "../store/Actions/dataAction";
+import { increaseLikes } from "../redux/reducers/HomeReducer";
 
 const HomeComponent = ({
   title,
@@ -19,12 +19,11 @@ const HomeComponent = ({
 
   const dispatch = useDispatch();
 
-  const fetchLikeCount = useSelector((state) => state.dataReducer.likes);
+  const totalLikes = useSelector((state) => state.HomeReducer.totalLikes); 
 
   const handleLike = () => {
-    console.log("Like");
-    dispatch(increaseTotalLikes());
-  }
+    dispatch(increaseLikes()); 
+  };
   return (
     <View
       style={{
@@ -40,9 +39,6 @@ const HomeComponent = ({
         elevation: 5,
       }}
     >
- 
-         
-
       <Image
         style={{
           width: "100%",
@@ -130,7 +126,7 @@ const HomeComponent = ({
           }}
         >
           <Text style={{ fontSize: 16, fontWeight: "500", color: "#444" }}>
-              {fetchLikeCount} 👍
+              {totalLikes} 👍
           </Text>
         </TouchableOpacity>
           <TouchableOpacity
