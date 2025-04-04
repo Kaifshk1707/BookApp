@@ -21,6 +21,8 @@ const HomeComponent = ({
 
   const fetchLikeCount = useSelector((state) => state.dataReducer.likes);
 
+  console.log("userRole", userRole);
+
   const handleLike = () => {
     console.log("Like");
     dispatch(increaseTotalLikes());
@@ -40,6 +42,9 @@ const HomeComponent = ({
         elevation: 5,
       }}
     >
+ 
+         
+
       <Image
         style={{
           width: "100%",
@@ -55,6 +60,7 @@ const HomeComponent = ({
       />
 
       <View style={{ marginBottom: 10 }}>
+       
         <Text
           style={{
             fontSize: 18,

@@ -2,8 +2,9 @@ const initialState = {
 role:"admin",
 
 }
-
-export default (state = initialState, action) => {
+ 
+export  const searchReducer = (state = initialState, action) => {
+  
   switch (action.type) {
 
   
