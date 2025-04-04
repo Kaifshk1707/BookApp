@@ -1,1 +1,2 @@
 export const INCREASE_TOTAL_LIKES = "INCREASE_TOTAL_LIKES";
+export const CHANGE_ROLE = "CHANGE_ROLE";

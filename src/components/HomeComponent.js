@@ -21,8 +21,6 @@ const HomeComponent = ({
 
   const fetchLikeCount = useSelector((state) => state.dataReducer.likes);
 
-  console.log("userRole", userRole);
-
   const handleLike = () => {
     console.log("Like");
     dispatch(increaseTotalLikes());
